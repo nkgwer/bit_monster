@@ -50,15 +50,12 @@ class Bitmonster:
         self.longest_ever_seen = 0
         self.block = None
 
-        self.color_dict = {'red': 'blue', 'blue': 'green', 'green': 'red'}
+        self.color_dict = {'red': 'blue', 'blue': 'green', 'green': 'yellow', 'yellow': 'red'}
 
 
     def move(self):
-        #print(self.longest_ever_seen)
-
 
         if self.block:
-            #print(self.block.get_len())
             return
 
         else:
@@ -68,7 +65,7 @@ class Bitmonster:
                 grid = self.field.get_grid_state(self.x + dx, self.y + dy)
                 if type(grid) == Bitmonster:
                     self.neighbors.add(grid)
-            if all([neighbor.color == self.color_dict[self.color] for neighbor in self.neighbors]):
+            if any([neighbor.color == self.color_dict[self.color] for neighbor in self.neighbors]):
                 for neighbor in self.neighbors:
                     if neighbor.block:
                         if neighbor.block.get_len() >= self.longest_ever_seen:
@@ -82,7 +79,6 @@ class Bitmonster:
                             self.block.member.add(neighbor)
                             neighbor.block = self.block
                             return
-
 
             front = self.field.get_grid_state(self.x + self.direction_dic[self.direction][0],
                                               self.y + self.direction_dic[self.direction][1])
@@ -101,16 +97,8 @@ class Bitmonster:
                             member.block = None
                             member.longest_ever_seen = self.longest_ever_seen
                 else:
-                    pass
                     front.longest_ever_seen, self.longest_ever_seen = max(front.longest_ever_seen, self.longest_ever_seen), max(front.longest_ever_seen, self.longest_ever_seen)
                 self.direction = random.choice(self.move_dic[self.direction])
 
             elif front == 1:
                 self.direction = random.choice(self.move_dic[self.direction])
-
-            else:
-                print('WTF')
-
-
-
-
