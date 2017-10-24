@@ -16,7 +16,7 @@ python main.py
 
 
 
-## Authors
+## Author
 
 * **Yota Nakagawa** 
 
